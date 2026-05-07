@@ -1,0 +1,438 @@
+import { useState, useEffect, useRef } from "react";
+
+// ─────────────────────────────────────────
+// ⚔️ ELITE DISCIPLINE SYSTEM — LAUNCH STACK
+// Backend + AI + Payments + Notifications + Deployment
+// ─────────────────────────────────────────
+
+// ── SKELETON COMPONENT ──
+const Skeleton = () => (
+  <div className="animate-pulse bg-gray-800 h-6 rounded-sm w-full" />
+);
+
+// ── SECTION BLOCK ──
+const Section = ({ icon, title, color, children }) => (
+  <div style={{
+    background: "rgba(10,10,15,0.85)",
+    border: `1px solid ${color}33`,
+    borderLeft: `3px solid ${color}`,
+    borderRadius: "2px",
+    padding: "20px 24px",
+    marginBottom: "16px",
+    backdropFilter: "blur(8px)",
+  }}>
+    <div style={{
+      display: "flex", alignItems: "center", gap: "10px",
+      marginBottom: "14px"
+    }}>
+      <span style={{ fontSize: "18px" }}>{icon}</span>
+      <span style={{
+        fontFamily: "'Bebas Neue', 'Impact', sans-serif",
+        fontSize: "13px",
+        letterSpacing: "3px",
+        color: color,
+        textTransform: "uppercase",
+      }}>{title}</span>
+    </div>
+    {children}
+  </div>
+);
+
+// ── CODE BLOCK ──
+const Code = ({ children }) => (
+  <pre style={{
+    background: "#050508",
+    border: "1px solid #1a1a2e",
+    borderRadius: "2px",
+    padding: "14px 16px",
+    fontSize: "11px",
+    lineHeight: "1.8",
+    color: "#9da8b8",
+    overflowX: "auto",
+    fontFamily: "'Courier New', monospace",
+    margin: "8px 0",
+  }}>{children}</pre>
+);
+
+// ── CHECKLIST ──
+const Checklist = ({ items }) => (
+  <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+    {items.map((item, i) => (
+      <div key={i} style={{
+        display: "flex", alignItems: "center", gap: "10px",
+        fontSize: "12px", color: "#c0c8d8", letterSpacing: "1px"
+      }}>
+        <span style={{ color: "#00ff88", fontSize: "14px" }}>✓</span>
+        <span>{item}</span>
+      </div>
+    ))}
+  </div>
+);
+
+// ── BADGE ──
+const Badge = ({ label, color }) => (
+  <span style={{
+    display: "inline-block",
+    background: `${color}18`,
+    border: `1px solid ${color}55`,
+    color: color,
+    fontSize: "9px",
+    letterSpacing: "2px",
+    padding: "2px 8px",
+    borderRadius: "2px",
+    fontFamily: "'Bebas Neue', monospace",
+    textTransform: "uppercase",
+    marginRight: "6px",
+  }}>{label}</span>
+);
+
+// ─────────────────────────────────────────
+// 🚀 MAIN APP
+// ─────────────────────────────────────────
+export default function EliteDisciplineSystem() {
+  const [activeTab, setActiveTab] = useState("backend");
+  const [loaded, setLoaded] = useState(false);
+  const [glitch, setGlitch] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setLoaded(true), 300);
+    const g = setInterval(() => {
+      setGlitch(true);
+      setTimeout(() => setGlitch(false), 120);
+    }, 5000);
+    return () => clearInterval(g);
+  }, []);
+
+  const tabs = [
+    { id: "backend",  label: "Backend",       icon: "🧠", color: "#00aaff" },
+    { id: "notif",    label: "Notifications",  icon: "🔔", color: "#ffaa00" },
+    { id: "payments", label: "Payments",       icon: "💰", color: "#00ff88" },
+    { id: "deploy",   label: "Deploy",         icon: "☁️", color: "#aa88ff" },
+    { id: "apk",      label: "APK Build",      icon: "📱", color: "#ff4466" },
+    { id: "ui",       label: "UI Polish",      icon: "🎨", color: "#ff8844" },
+    { id: "checklist","label": "Checklist",    icon: "⚔️", color: "#00ff88" },
+  ];
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "#060609",
+      fontFamily: "'Courier New', monospace",
+      padding: "0",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      {/* Background grid */}
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 0,
+        backgroundImage: `
+          linear-gradient(rgba(0,170,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,170,255,0.03) 1px, transparent 1px)
+        `,
+        backgroundSize: "40px 40px",
+        pointerEvents: "none",
+      }} />
+
+      {/* Scanline overlay */}
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 1,
+        background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px)",
+        pointerEvents: "none",
+      }} />
+
+      <div style={{ position: "relative", zIndex: 2, maxWidth: "860px", margin: "0 auto", padding: "32px 20px" }}>
+
+        {/* ── HEADER ── */}
+        <div style={{
+          textAlign: "center",
+          marginBottom: "36px",
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "translateY(0)" : "translateY(-16px)",
+          transition: "all 0.6s ease",
+        }}>
+          <div style={{
+            fontSize: "11px",
+            letterSpacing: "6px",
+            color: "#00aaff",
+            marginBottom: "10px",
+            textTransform: "uppercase",
+          }}>⚔️ &nbsp; Launch Stack v9.0</div>
+          <h1 style={{
+            fontFamily: "'Bebas Neue', 'Impact', sans-serif",
+            fontSize: "clamp(38px, 8vw, 72px)",
+            letterSpacing: "6px",
+            lineHeight: 1,
+            margin: "0 0 8px 0",
+            color: "#ffffff",
+            filter: glitch ? "drop-shadow(2px 0 0 #ff0040) drop-shadow(-2px 0 0 #00aaff)" : "none",
+            transition: "filter 0.1s",
+          }}>
+            ELITE DISCIPLINE
+          </h1>
+          <h2 style={{
+            fontFamily: "'Bebas Neue', 'Impact', sans-serif",
+            fontSize: "clamp(18px, 4vw, 32px)",
+            letterSpacing: "10px",
+            color: "#00ff88",
+            margin: "0 0 16px 0",
+            fontWeight: 400,
+          }}>SYSTEM</h2>
+          <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "4px" }}>
+            <Badge label="Node.js" color="#00aaff" />
+            <Badge label="Capacitor" color="#ffaa00" />
+            <Badge label="Razorpay" color="#00ff88" />
+            <Badge label="Firebase" color="#aa88ff" />
+            <Badge label="Android APK" color="#ff4466" />
+          </div>
+        </div>
+
+        {/* ── TABS ── */}
+        <div style={{
+          display: "flex", flexWrap: "wrap", gap: "4px",
+          marginBottom: "24px",
+          borderBottom: "1px solid #1a1a2e",
+          paddingBottom: "16px",
+        }}>
+          {tabs.map(tab => (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+              background: activeTab === tab.id ? `${tab.color}15` : "transparent",
+              border: activeTab === tab.id ? `1px solid ${tab.color}66` : "1px solid #1a1a2e",
+              color: activeTab === tab.id ? tab.color : "#556",
+              padding: "6px 14px",
+              fontSize: "10px",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              borderRadius: "2px",
+              fontFamily: "'Bebas Neue', monospace",
+              transition: "all 0.2s",
+            }}>
+              {tab.icon} {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ── TAB CONTENT ── */}
+
+        {activeTab === "backend" && (
+          <Section icon="🧠" title="Backend — Node.js + Express + AI" color="#00aaff">
+            <p style={{ color: "#7888a0", fontSize: "12px", marginBottom: "12px", lineHeight: 1.7 }}>
+              Express server with AI coaching endpoint. Analyzes streak + XP data and returns motivational directives.
+              Swap <code style={{ color: "#00aaff" }}>res.json()</code> logic for OpenAI when scaling.
+            </p>
+            <Code>{`// server/index.js
+import express from "express";
+import cors from "cors";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// 🧠 AI ROUTE — ELITE DISCIPLINE SYSTEM
+app.post("/api/ai", (req, res) => {
+  const { streak, xp } = req.body;
+
+  let message = "⚡ Stay consistent.";
+  if (streak >= 5) message = "🔥 You're on fire. Increase difficulty.";
+  if (streak === 0) message = "⚠️ Restart now. Don't wait.";
+  if (xp > 500)    message = "💪 Strong growth. Push harder.";
+
+  res.json({ message });
+});
+
+app.listen(5000, () =>
+  console.log("⚔️ ELITE DISCIPLINE SYSTEM — Server on :5000")
+);`}</Code>
+          </Section>
+        )}
+
+        {activeTab === "notif" && (
+          <Section icon="🔔" title="Notifications — Capacitor Local" color="#ffaa00">
+            <p style={{ color: "#7888a0", fontSize: "12px", marginBottom: "12px", lineHeight: 1.7 }}>
+              Push local reminders via Capacitor. Fires 60 seconds from call. Extend with daily schedules using <code style={{ color: "#ffaa00" }}>repeats: true</code>.
+            </p>
+            <Code>{`// Install
+npm install @capacitor/local-notifications
+
+// notifications.js
+import { LocalNotifications } from '@capacitor/local-notifications';
+
+export async function scheduleReminder() {
+  await LocalNotifications.schedule({
+    notifications: [{
+      title: "⚔️ Elite Discipline System",
+      body:  "Complete your habits. No excuses.",
+      id:    1,
+      schedule: {
+        at: new Date(Date.now() + 60000)
+      }
+    }]
+  });
+}`}</Code>
+          </Section>
+        )}
+
+        {activeTab === "payments" && (
+          <Section icon="💰" title="Payments — Razorpay" color="#00ff88">
+            <p style={{ color: "#7888a0", fontSize: "12px", marginBottom: "12px", lineHeight: 1.7 }}>
+              One-tap INR payment flow for Premium upgrade. Replace <code style={{ color: "#00ff88" }}>RAZORPAY_KEY</code> with your live key from the Razorpay dashboard.
+            </p>
+            <Code>{`// payments.js — ELITE DISCIPLINE SYSTEM
+const startPayment = async () => {
+  const options = {
+    key:         "RAZORPAY_KEY",
+    amount:      49900,          // ₹499 in paise
+    currency:    "INR",
+    name:        "Elite Discipline System",
+    description: "Premium Upgrade — Unlock Full Arsenal",
+    handler: function (response) {
+      console.log("✅ Payment ID:", response.razorpay_payment_id);
+      alert("⚔️ Premium Unlocked. Go harder.");
+    }
+  };
+
+  const rzp = new window.Razorpay(options);
+  rzp.open();
+};`}</Code>
+          </Section>
+        )}
+
+        {activeTab === "deploy" && (
+          <Section icon="☁️" title="Deploy — Firebase Hosting" color="#aa88ff">
+            <p style={{ color: "#7888a0", fontSize: "12px", marginBottom: "12px", lineHeight: 1.7 }}>
+              Deploy the Elite Discipline System frontend to Firebase in four commands.
+            </p>
+            <Code>{`# Install Firebase CLI
+npm install -g firebase-tools
+
+# Authenticate
+firebase login
+
+# Initialize project (select Hosting)
+firebase init
+
+# Build production bundle
+npm run build
+
+# Ship it
+firebase deploy
+
+# ⚔️ ELITE DISCIPLINE SYSTEM is live.`}</Code>
+          </Section>
+        )}
+
+        {activeTab === "apk" && (
+          <Section icon="📱" title="APK Build — Capacitor + Android" color="#ff4466">
+            <p style={{ color: "#7888a0", fontSize: "12px", marginBottom: "12px", lineHeight: 1.7 }}>
+              Package as a native Android APK using Capacitor. Open in Android Studio to sign and export for Play Store submission.
+            </p>
+            <Code>{`# 1. Build web assets
+npm run build
+
+# 2. Add Android platform
+npx cap add android
+
+# 3. Sync web assets → native
+npx cap copy
+
+# 4. Open Android Studio
+npx cap open android
+
+# ─── In Android Studio ───────────────────
+# Build > Generate Signed Bundle / APK
+# Name: Elite Discipline System
+# Package: com.elitediscipline.system
+# ─────────────────────────────────────────`}</Code>
+          </Section>
+        )}
+
+        {activeTab === "ui" && (
+          <Section icon="🎨" title="UI Polish — Premium Feel" color="#ff8844">
+            <p style={{ color: "#7888a0", fontSize: "12px", marginBottom: "12px", lineHeight: 1.7 }}>
+              Drop-in components for a polished Elite Discipline System interface. Skeleton loaders, gradients, motion.
+            </p>
+            <Code>{`// Skeleton Loader
+const Skeleton = () => (
+  <div className="animate-pulse bg-gray-800 h-6 rounded" />
+);
+
+// Gradient Card
+const Card = ({ children }) => (
+  <div style={{
+    background: "linear-gradient(135deg, #0a0a0f, #0d1117)",
+    border: "1px solid rgba(0,170,255,0.15)",
+    borderRadius: "4px",
+    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+    padding: "24px",
+  }}>
+    {children}
+  </div>
+);
+
+// Framer Motion — staggered entrance
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 }
+  }
+};
+
+// Hover button
+const PremiumButton = styled.button\`
+  background: linear-gradient(135deg, #00aaff, #0055ff);
+  border: none;
+  padding: 14px 32px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,170,255,0.4);
+  }
+\`;`}</Code>
+          </Section>
+        )}
+
+        {activeTab === "checklist" && (
+          <Section icon="⚔️" title="Final System Checklist — Ready for Launch" color="#00ff88">
+            <div style={{
+              background: "linear-gradient(135deg, rgba(0,255,136,0.04), rgba(0,170,255,0.04))",
+              border: "1px solid rgba(0,255,136,0.15)",
+              borderRadius: "2px",
+              padding: "20px",
+              marginBottom: "16px",
+            }}>
+              <Checklist items={[
+                "Backend — Node.js + Express AI route",
+                "Notifications — Capacitor Local Push",
+                "Payments — Razorpay INR flow",
+                "Hosting — Firebase deploy pipeline",
+                "APK Build — Capacitor + Android Studio",
+                "UX Polish — Skeleton, gradients, motion",
+              ]} />
+            </div>
+            <div style={{
+              textAlign: "center",
+              padding: "20px",
+              borderTop: "1px solid #1a1a2e",
+            }}>
+              <div style={{
+                fontFamily: "'Bebas Neue', Impact, sans-serif",
+                fontSize: "28px",
+                letterSpacing: "8px",
+                color: "#00ff88",
+                marginBottom: "6px",
+              }}>🚀 READY FOR LAUNCH</div>
+              <div style={{ fontSize: "11px", letterSpacing: "3px", color: "#556", textTransform: "uppercase" }}>
+                Elite Discipline System — v9.0
+              </div>
+            </div>
+          </Section>
+        )}
+
+      </div>
+    </div>
+  );
+}
